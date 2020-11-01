@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/sky"-->
+<!--        android:alpha="0.5"-->
+<!--        android:scaleType="centerCrop"/>-->
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Seoul, "
+        android:textSize="15sp"/>
+    <TextView
+        android:id="@+id/tv_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tv_location"
+        app:layout_constraintStart_toEndOf="@id/tv_location"
+        android:text="Korea"
+        android:textSize="15sp"/>
+    <ImageView
+        android:id="@+id/iv_weather"
+        app:layout_constraintStart_toStartOf="@id/tv_location"
+        app:layout_constraintTop_toBottomOf="@id/tv_location"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_autorenew"
+        android:rotation="45"/>
+    <TextView
+        android:id="@+id/tv_temperature"
+        app:layout_constraintStart_toEndOf="@id/iv_weather"
+        app:layout_constraintTop_toTopOf="@id/iv_weather"
+        app:layout_constraintBottom_toBottomOf="@id/iv_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="30sp"
+        android:text="24°C"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"/>
+    <TextView
+        android:id="@+id/tv_weather_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/iv_weather"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="20dp"
+        android:text="clear"/>
+    <TextView
+        android:id="@+id/tv_temp_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_weather_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="20dp"
+        android:gravity="end"
+        android:text="27°/21°\nFeels like 23°"/>
+
+    <TextView
+        android:id="@+id/tv_wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_temperature"
+        app:layout_constraintStart_toStartOf="@id/iv_weather"
+        android:text="0 m/s"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
