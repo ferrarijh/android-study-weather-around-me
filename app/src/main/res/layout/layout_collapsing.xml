@@ -27,8 +27,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_location"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_autorenew"
-        android:rotation="45"/>
+        android:src="@drawable/ic_autorenew"/>
     <TextView
         android:id="@+id/tv_temperature"
         app:layout_constraintStart_toEndOf="@id/iv_weather"

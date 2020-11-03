@@ -20,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="5f11af1ee2a161257811981a8576201f"/>
+
+<!--        <meta-data android:name="com.kakao.sdk.AppKey" android:value="5f11af1ee2a161257811981a8576201f"/>-->
+
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCV8yE_7-Z96ihkhuMtZmFV_37NDZAjw1Y"/>
 
     </application>

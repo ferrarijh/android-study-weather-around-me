@@ -9,6 +9,7 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.layout_collapsing.*
 import java.util.*
 
@@ -66,7 +68,6 @@ class MainFragment: Fragment(), OnMapReadyCallback{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setMap(savedInstanceState)
     }
 
@@ -84,9 +85,11 @@ class MainFragment: Fragment(), OnMapReadyCallback{
         mViewModel.locationLatLng.observe(viewLifecycleOwner){
             getWeather()
             setPinTo(it)
-            if(mViewModel.isMyLocationEnabled.value == true)
+            val isMyLocationEnabled = mViewModel.isMyLocationEnabled.value
+            if(isMyLocationEnabled == null || isMyLocationEnabled == true)
                 moveCameraTo(it)
         }
+
     }
 
     private fun setWeatherObservers(){
@@ -191,8 +194,12 @@ class MainFragment: Fragment(), OnMapReadyCallback{
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
-    private fun setMap(savedInstanceState: Bundle?){
-        mapView.onCreate(savedInstanceState)
+    private fun setMap(bundle: Bundle?){
+        Log.d("", "layout_fragment_main: $layout_fragment_main")
+        Log.d("", "getView(): $view")
+        mapView.onCreate(bundle)
+
+        Log.d("", "called mapView.onCreate()..")
         mapView.onResume()
         mapView.getMapAsync(this)
     }
@@ -258,7 +265,8 @@ class MainFragment: Fragment(), OnMapReadyCallback{
     }
 
     private fun setPinTo(latLng: LatLng){
-        val icon = if(mViewModel.isMyLocationEnabled.value!!) pinPersonBitmap else pinBitmap
+        val isMyLocationEnabled = mViewModel.isMyLocationEnabled.value
+        val icon = if(isMyLocationEnabled == null || isMyLocationEnabled == true) pinPersonBitmap else pinBitmap
         val markerOptions = MarkerOptions().position(latLng)
             .icon(BitmapDescriptorFactory.fromBitmap(icon))
         gMap?.apply{

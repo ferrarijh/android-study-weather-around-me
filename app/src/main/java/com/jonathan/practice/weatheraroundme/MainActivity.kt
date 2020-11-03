@@ -15,5 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         fab.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
+
+        Log.d("", "activity created.")
     }
 }
