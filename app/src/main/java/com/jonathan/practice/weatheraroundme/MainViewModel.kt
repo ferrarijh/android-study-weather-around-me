@@ -21,10 +21,13 @@ class MainViewModel: ViewModel(){
     val locationLatLng = Transformations.map(location){ LatLng(it.latitude, it.longitude) }
 
     val weather = MutableLiveData<JsonObject>()
-    val weatherIcon = Transformations.map(weather){it.getAsJsonArray("weather").get(0).asJsonObject.get("icon").asString}
-    val weatherDesc = Transformations.map(weather){it.getAsJsonArray("weather").get(0).asJsonObject.get("main").asString}
-    val weatherCountry = Transformations.map(weather){it["sys"].asJsonObject["country"].asString}
-    val weatherLocation = Transformations.map(weather){ it["name"].asString }
+    val weatherIcon = Transformations.map(weather){it.getAsJsonArray("weather")[0].asJsonObject["icon"].asString}
+    val weatherDesc = Transformations.map(weather){it.getAsJsonArray("weather")[0].asJsonObject["main"].asString}
+    val weatherCountry = Transformations.map(weather){
+        val res = it["sys"].asJsonObject["country"]?.asString
+        Log.d("", "country: $res")
+        res}
+    val weatherLocation = Transformations.map(weather){ it["name"].asString}
     val weatherTemperature = Transformations.map(weather){it.getAsJsonObject("main")}
     val weatherWind = Transformations.map(weather){it["wind"].asJsonObject["speed"].asString + " m/s"}
 

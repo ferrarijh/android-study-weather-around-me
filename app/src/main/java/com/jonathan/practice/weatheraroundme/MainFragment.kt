@@ -92,7 +92,8 @@ class MainFragment: Fragment(), OnMapReadyCallback{
     private fun setWeatherObservers(){
         mViewModel.apply{
             weatherCountry.observe(viewLifecycleOwner){
-                parent.tv_country.text = Locale("", it).displayCountry
+                parent.tv_country.text = if(it !=  null) Locale("", it).displayCountry
+                else "UNKNOWN COUNTRY"
             }
             weatherIcon.observe(viewLifecycleOwner){
                 val url = "https://openweathermap.org/img/wn/$it@2x.png"
@@ -118,9 +119,10 @@ class MainFragment: Fragment(), OnMapReadyCallback{
 
     private fun setToolbar(){
         mViewModel.weatherLocation.observe(viewLifecycleOwner){
-            parent.ctl.title = "Weather in $it is..."
-            val tvLoc = "$it, "
-            parent.tv_location.text = tvLoc
+            val locTitle = if(it.isNotBlank()) it else "UNKNOWN LOCATION"
+            parent.ctl.title = "Weather in $locTitle is..."
+            val tvLocText = "$locTitle, "
+            parent.tv_location.text = tvLocText
         }
     }
 
@@ -147,11 +149,11 @@ class MainFragment: Fragment(), OnMapReadyCallback{
             if(it){
                 fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
                 fab.setImageDrawable(ContextCompat.getDrawable(parent, R.drawable.ic_my_location))
-                toast("내 위치 찾기를 시작합니다")
+                toast("Started tracking current location..")
             }else {
                 fusedLocationClient.removeLocationUpdates(locationCallback)
                 fab.setImageDrawable(ContextCompat.getDrawable(parent, R.drawable.ic_my_location_grey))
-                toast("수동 위치 설정 시작 - 길게 눌러 핀을 꽂으세요")
+                toast("Manual Mode - Long press to drop pin")
             }
         }
     }
@@ -204,7 +206,7 @@ class MainFragment: Fragment(), OnMapReadyCallback{
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 mViewModel.isMyLocationEnabled.value = true
             else {
-                toast("위치 검색을 허용해야 앱을 사용할 수 있어요")
+                toast("I need GPS permission to run :(")
                 parent.finish()
             }
     }
@@ -266,7 +268,7 @@ class MainFragment: Fragment(), OnMapReadyCallback{
     }
 
     private fun moveCameraTo(latLng: LatLng){
-        gMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
+        gMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
     }
 
     private fun getWeather(){
