@@ -20,6 +20,8 @@ import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -76,9 +78,10 @@ class MainFragment: Fragment(), OnMapReadyCallback{
 
         setFAB()
         setPinBitmap()
-        //setLocationManager()
+//        setLocationManager()
         setLocationClient()
         setPermission()
+//        setPlayService()
         setToolbar()
         setWeatherObservers()
 
@@ -91,6 +94,17 @@ class MainFragment: Fragment(), OnMapReadyCallback{
         }
 
     }
+
+//    private fun setPlayService(){
+//        val status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(requireContext())
+//        if(status != ConnectionResult.SUCCESS){
+//            if(status == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED)
+//                toast("Please update Google Play Service to use app")
+//            else
+//                toast("Please install Google Play Service to use app")
+//        }else
+//            Log.d("", "Google Play Service is up to date")
+//    }
 
     private fun setWeatherObservers(){
         mViewModel.apply{
@@ -136,6 +150,7 @@ class MainFragment: Fragment(), OnMapReadyCallback{
 
         locationCallback = object: LocationCallback(){
             override fun onLocationResult(p0: LocationResult?) {
+                Log.d("", "location(onLocationResult): $p0")
                 val latestLoc = p0?.run{
                     locations[this.locations.size-1]
                 }
@@ -187,8 +202,10 @@ class MainFragment: Fragment(), OnMapReadyCallback{
     @SuppressLint("MissingPermission")
     fun requestLocationUpdates(){
         fusedLocationClient.lastLocation
-            .addOnSuccessListener {
-                mViewModel.location.value = it
+            .addOnSuccessListener {loc: Location? ->
+                loc?.let {
+                    mViewModel.location.value = it
+                }
             }
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
