@@ -9,5 +9,7 @@
 </div>
 
 ### Furthermore...
+* Under sdk 21 the weather api doesn't work since CA of openweathermap api is not listed in trusted CAs.
+(base URL for retrofit starts with "https" in the app)
 * MapView(google map) in fragment dies on rotation - probably not within activity?
 * Null check!!
