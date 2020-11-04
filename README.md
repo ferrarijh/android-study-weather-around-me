@@ -1,6 +1,6 @@
 # Weather Around Me - android application
 * Shows weather on my location(gps/network) or locations set manually on map.
-* Used: Retrofit2, MapView(Google Map), FusedLocationProviderClient, ViewModel
+* Used: Retrofit2, MapView(Google Map), FusedLocationProviderClient, ViewModel + LiveData
 * Server: openweathermap api
 
 ## Demo
